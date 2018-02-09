@@ -1,9 +1,11 @@
 package com.yenyu.a20180209_02;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
 
 import java.util.Date;
@@ -18,8 +20,12 @@ public class MywidgetProivder extends AppWidgetProvider {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
                 R.layout.mywidget);
-        Date date=new Date();//顯示日期
-        remoteViews.setTextViewText(R.id.textView,date.toString()); //更改顯示，setText
+        Date date = new Date();
+        // remoteViews.setTextViewText(R.id.textView, date.toString());
+        Intent it = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                context, 0, it, 0);
+        remoteViews.setOnClickPendingIntent(R.id.button, pendingIntent);
         ComponentName thisWidget = new ComponentName(context, MywidgetProivder.class);
 // 取得 Widgets 管理器
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
